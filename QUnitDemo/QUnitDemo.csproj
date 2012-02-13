@@ -127,9 +127,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="QUnitTests\Sample.js" />
+    <Content Include="QUnitTests\calculator.test.js" />
     <Content Include="README.jQuery.vsdoc.txt" />
-    <Content Include="Scripts\Application\Calculator.js" />
+    <Content Include="Scripts\Application\calculator.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
