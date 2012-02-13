@@ -18,11 +18,13 @@
         }, /Only numeric values can be entered/);
     });
 
+    /* ignore
     test("Scorecard namespace pollution test", function () {
-        var scorecard = new Scorecard();
+    var scorecard = new Scorecard();
 
-        scorecard.leakyMethod();
+    scorecard.leakyMethod();
     });
+    */
 
     test("ok is truthy", function () {
         var testObj = { testProperty: "test" };
@@ -36,6 +38,8 @@
         // Corollary - use more specific methods
     });
 
+    module("QUnit behaviour");
+
     test("equal is coercive", function () {
         equal(1, "1", "Comparing different primative types works");
     });
@@ -47,21 +51,74 @@
         // Corollary - strictEqual is more suitable than equal and ok.
     });
 
+    /* ignore
     test("strictEqual cannot compare objects", function () {
-        strictEqual(
-            { property1: "value1" },
-            { property1: "value1" });
-        // Corollary - use strictEqual for primatives, not for objects
+    strictEqual(
+    { property1: "value1" },
+    { property1: "value1" });
+    // Corollary - use strictEqual for primatives, not for objects
+    });
+    */
+
+    /* ignore
+    test("deepEqual can compare objects", function () {
+    deepEqual(
+    { property1: "value1" },
+    { property1: "value1" });
+
+    deepEqual(
+    { property1: "value1" },
+    { property1: "value2" });
+    });
+    */
+
+    module("Stubbed functions");
+
+    function stubbedFunction(returnValue) {
+        var func = function () {
+            func.args = arguments;
+            func.called = true;
+            func.callCount += 1;
+            return returnValue;
+        };
+
+        func.called = false;
+        func.callCount = 0;
+        func.args = [];
+        return func;
+    }
+
+    test("a stubbed function allows the return value to be inspected", function () {
+        var returnValue,
+            testObject = {
+                testMethod: stubbedFunction("test return value")
+            };
+
+        returnValue = testObject.testMethod();
+        strictEqual(returnValue, "test return value");
     });
 
-    test("deepEqual can compare objects", function () {
-        deepEqual(
-            { property1: "value1" },
-            { property1: "value1" });
+    test("a stubbed function allows inspection of parameters passed in", function () {
+        var fn = stubbedFunction();
 
-        deepEqual(
-            { property1: "value1" },
-            { property1: "value2" });
+        fn("1", 2);
+        strictEqual(fn.args[0], "1");
+        strictEqual(fn.args[1], 2);
+    });
+
+    test("a stubbed function records how many times it is called", function () {
+        var fn = stubbedFunction();
+
+        strictEqual(fn.callCount, 0);
+        strictEqual(fn.called, false);
+
+        fn();
+        strictEqual(fn.callCount, 1);
+        strictEqual(fn.called, true);
+
+        fn();
+        strictEqual(fn.callCount, 2);
+        strictEqual(fn.called, true);
     });
 
     module("Setup and teardown with test variables",
@@ -132,15 +189,15 @@
 
     test("Check that normal tests fail with asynchronous behaviour", function () {
         expect(1);
-        
+
         var testObject = {
-                asynchronousMethod: function () {
-                    setTimeout(function () {
-                        ok(true);   // Can validate parameters
-                        start();
-                    });
-                }
-            };
+            asynchronousMethod: function () {
+                setTimeout(function () {
+                    ok(true);   // Can validate parameters
+                    start();
+                });
+            }
+        };
 
         testObject.asynchronousMethod();
 
@@ -148,7 +205,9 @@
 
     });
 
-    asyncTest("Calling calculate submits score to server", function () {
+    module("Ajax with fixtures");
+
+    asyncTest("When calling record(), then the score is submitted to the server", function () {
         expect(1);
         var scorecard = new Scorecard(),
             newScore = 1;
@@ -159,5 +218,21 @@
         });
 
         scorecard.record(newScore);
+    });
+
+    asyncTest("Given the server will return a 403, when calling record() then 'forbidden' is returned", function () {
+        expect(1);
+        var scorecard = new Scorecard(),
+            newScore = 1;
+
+        $.fixture("/Scores/Submit", function (orig, settings, headers) {
+            return [403, "Unauthorized"];
+        });
+
+        scorecard.recordAsync(newScore)
+            .fail(function (reason) {
+                strictEqual(reason, "this user is forbidden");
+                start();
+            });
     });
 } ());
