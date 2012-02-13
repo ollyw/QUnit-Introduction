@@ -27,20 +27,20 @@
     SortedSet<string> testFiles = new SortedSet<string>();
 
     // find all .js files in folder
-    var javascriptFileNames = from path in Directory.GetFiles(Server.MapPath("./"), "*.js")
+    var javascriptFileNames = from path in Directory.GetFiles(Server.MapPath(Request.Path), "*.js")
         let fileName = Path.GetFileName(path)
     select fileName;
 
-    string rawUrl = Request.RawUrl;
+    string rawUrl = Request.Url.LocalPath;
 
     // read and parse each js file to find <reference> xml comment tag which targets to js file inder test
     // the same technic is used in JetBrains Resharper so we make both test runners compatible
     foreach (string filename in javascriptFileNames)
     {
-        string testFile = string.Format("{0}{1}", rawUrl, filename);
+        string testFile = string.Format("{0}/{1}", rawUrl, filename).Replace("//", "/");
         testFiles.Add(testFile);
-        
-        foreach (string line in File.ReadLines(Path.Combine(Server.MapPath("./"), filename)))
+
+        foreach (string line in File.ReadLines((Server.MapPath(testFile))))
         {
             string[] words = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -51,7 +51,7 @@
 
               if (first > 0 && last > 0 && last > first)
               {
-                  string codeFilePath = line.Substring(first + 1, last - first - 1);
+                  string codeFilePath = string.Format("{0}/{1}", Request.ApplicationPath, line.Substring(first + 1, last - first - 1)).Replace("//","/");
                   filesUnderTest.Add(codeFilePath);
               }
             }
