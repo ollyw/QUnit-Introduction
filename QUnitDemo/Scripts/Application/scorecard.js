@@ -1,10 +1,14 @@
 ﻿function Scorecard() {
-    "use strict";
+    //"use strict";
     
     function enter() {
         throw "Only numeric values can be entered";
     }
 
+    function leakyMethod() {
+        window.foo = function() {};
+    }
+    
     function record(score) {
         $.ajax({
             url: "/Scores/Submit",
@@ -15,6 +19,7 @@
 
     return {
         enter: enter,
-        record: record
+        record: record,
+        leakyMethod: leakyMethod
     };
 }
