@@ -1,0 +1,41 @@
+﻿@* QUnit-Razor NuGet package v0.2
+ * http://www.nuget.org/packages/QUnit.Razor
+ *
+ * Adds QUnit js/css to ASP.NET MVC Razor projects and Cshtml Test Runner web page to /QUnitTests/index.cshtml.
+ * Just put your tests into js files in /QUnitTests folder. The test runner scans for all of them.
+ * Feel free to rename QUnitTests testing folder to anything you like.
+ *
+ * Please send any suggestions to improve that package and the runner.
+ *
+ * (c) 2012, Leonid Shirmanov
+ * http://www.shirmanov.com
+ *
+ * Includes QUnit 1.3.0pre javascript testing framework
+ * http://docs.jquery.com/QUnit
+ *
+ * Thanks to Phil Haack for his attempts to infuse technology and software development with humor and a pragmatic eye.
+ * http://haacked.com/archive/2011/12/10/using-qunit-with-razor-layouts.aspx
+ *
+ * Works best with QUnit tests support in Jetbrains Resharper 6.x
+ * http://blogs.jetbrains.com/dotnet/2011/03/resharper-6-introduces-support-for-javascript-unit-testing/
+ *
+ * Date: January, 29th 2012
+ *@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>QUnit Tests</title>
+    <link rel="stylesheet" href="/content/qunit.css" />
+    <script type="text/javascript" src="/scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/qunit.js"></script>
+    @RenderBody()
+    </head>
+    <body>
+        <h1 id="qunit-header">Run All QUnit Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture">test markup, will be hidden</div>
+    </body>
+</html>
