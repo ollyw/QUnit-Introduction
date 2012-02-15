@@ -5,15 +5,15 @@
 
 (function () {
     "use strict";
-
+    
     module("QUnit namespace pollution test");
 
     /* ignore
+    // Remember to tick 'noglobals' on test runner
     test("Scorecard namespace pollution test", function () {
     var scorecard = new Scorecard();
 
     scorecard.leakyMethod();
     });
     */
-
 } ());

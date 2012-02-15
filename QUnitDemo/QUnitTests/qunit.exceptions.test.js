@@ -16,4 +16,10 @@
             scorecard.enter(input);
         }, /Only numeric values can be entered/);
     });
+    
+    /* ignore
+    test("Global syntax errors should be caught", function () {
+        {
+    });
+    */
 } ());
