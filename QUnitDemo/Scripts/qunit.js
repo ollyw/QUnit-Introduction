@@ -13,8 +13,11 @@
 var defined = {
 	setTimeout: typeof window.setTimeout !== "undefined",
 	sessionStorage: (function() {
+		var x = "qunit-test-string";
 		try {
-			return !!sessionStorage.getItem;
+			sessionStorage.setItem(x, x);
+			sessionStorage.removeItem(x);
+			return true;
 		} catch(e) {
 			return false;
 		}
@@ -447,9 +450,14 @@ var QUnit = {
 	QUnit.constructor = F;
 })();
 
-// Backwards compatibility, deprecated
-QUnit.equals = QUnit.equal;
-QUnit.same = QUnit.deepEqual;
+// deprecated; still export them to window to provide clear error messages
+// next step: remove entirely
+QUnit.equals = function() {
+	throw new Error("QUnit.equals has been deprecated since 2009 (e88049a0), use QUnit.equal instead");
+};
+QUnit.same = function() {
+	throw new Error("QUnit.same has been deprecated since 2009 (e88049a0), use QUnit.deepEqual instead");
+};
 
 // Maintain internal state
 var config = {
@@ -564,15 +572,15 @@ extend(QUnit, {
 	/**
 	 * Resets the test setup. Useful for tests that modify the DOM.
 	 *
-	 * If jQuery is available, uses jQuery's html(), otherwise just innerHTML.
+	 * If jQuery is available, uses jQuery's replaceWith(), otherwise use replaceChild
 	 */
 	reset: function() {
 		if ( window.jQuery ) {
-			jQuery( "#qunit-fixture" ).html( config.fixture );
+			jQuery( "#qunit-fixture" ).replaceWith( config.fixture.cloneNode(true) );
 		} else {
-			var main = id( 'qunit-fixture' );
+			main = id( 'qunit-fixture' );
 			if ( main ) {
-				main.innerHTML = config.fixture;
+				main.parentNode.replaceChild(config.fixture.cloneNode(true), main);
 			}
 		}
 	},
@@ -779,7 +787,7 @@ QUnit.load = function() {
 
 	var main = id('qunit-fixture');
 	if ( main ) {
-		config.fixture = main.innerHTML;
+		config.fixture = main.cloneNode(true);
 	}
 
 	if (config.autostart) {
@@ -1369,9 +1377,9 @@ QUnit.jsDump = (function() {
 				var ret = [ ];
 				QUnit.jsDump.up();
 				for ( var key in map ) {
-				    var val = map[key];
+					var val = map[key];
 					ret.push( QUnit.jsDump.parse(key,'key') + ': ' + QUnit.jsDump.parse(val, undefined, stack));
-                }
+				}
 				QUnit.jsDump.down();
 				return join( '{', ret, '}' );
 			},

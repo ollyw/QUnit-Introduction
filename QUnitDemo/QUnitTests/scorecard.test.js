@@ -225,7 +225,7 @@
         var scorecard = new Scorecard(),
             newScore = 1;
 
-        $.fixture("/Scores/Submit", function (orig, settings, headers) {
+        $.fixture("/Scores/Submit", function () {
             return [403, "Unauthorized"];
         });
 
@@ -235,4 +235,39 @@
                 start();
             });
     });
+
+    module("Using JQuery to emulate events", {
+        setup: function () {
+            $("#qunit-fixture").empty().append(
+                $("<form>")
+                    .attr("id", "widgetForm")
+                    .append(
+                        $("<button>")
+                            .attr("id", "widgetButton"))
+            );
+        },
+        teardown: function () {
+            $("#qunit-fixture").empty();
+        }
+    });
+
+    /*
+    // This uses a simple widget, with no separation of concerns - not best practise
+    test("When the submit button is pressed, the form is hidden ", function () {
+        function TestView() {
+            $("#widgetButton").on("click", function (event) {
+                // What's missing here!
+                $("#widgetForm").hide();
+            });
+            return this;
+        }
+
+        var view = new TestView();
+        //$("#qunit-fixture button").trigger("click");
+        debugger;
+        $("#qunit-fixture button").trigger("click");
+        strictEqual($("#qunit-fixture form:visible").length, 0);
+    });
+    */
+
 } ());
