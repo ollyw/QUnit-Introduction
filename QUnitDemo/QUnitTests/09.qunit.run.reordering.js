@@ -4,7 +4,7 @@
     // Can turn reordering on or off
     // QUnit.config.reorder = false;
     
-    // Look at session storage to view/reset ordering
+    // Look at browser session storage to view/reset ordering
 
     module("QUnit failed unit test re-ordering");
 
