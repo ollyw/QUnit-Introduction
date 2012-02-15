@@ -6,24 +6,14 @@
 (function () {
     "use strict";
 
-    module("Scorecard Logic");
+    module("QUnit exception handling");
 
     test("The scorecard must throw an exception if non-numeric characters are entered", 1, function () {
         raises(function () {
-            // Arrange
             var input = "invalid input",
                 scorecard = new Scorecard();
 
             scorecard.enter(input);
         }, /Only numeric values can be entered/);
     });
-
-    /* ignore
-    test("Scorecard namespace pollution test", function () {
-    var scorecard = new Scorecard();
-
-    scorecard.leakyMethod();
-    });
-    */
-
 } ());
