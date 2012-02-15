@@ -1,5 +1,5 @@
 ﻿function Scorecard() {
-    //"use strict";
+    "use strict";
     
     function enter() {
         throw "Only numeric values can be entered";

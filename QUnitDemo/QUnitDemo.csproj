@@ -127,7 +127,13 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="QUnitTests\ajax.fixtures.test.js" />
+    <Content Include="QUnitTests\asynchronous.behaviour.test.js" />
+    <Content Include="QUnitTests\dom.events.test.js" />
+    <Content Include="QUnitTests\qunit.assertions.test.js" />
+    <Content Include="QUnitTests\qunit.setup.teardown.test.js" />
     <Content Include="QUnitTests\scorecard.test.js" />
+    <Content Include="QUnitTests\stubbed.functions.test.js" />
     <Content Include="README.jQuery.vsdoc.txt" />
     <Content Include="Scripts\Application\scorecard.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
