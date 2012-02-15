@@ -1,11 +1,14 @@
 ﻿function Scorecard() {
     "use strict";
-    
-    function enter() {
-        throw "Only numeric values can be entered";
+
+    function enter(digits) {
+        if (typeof digits !== "number") {
+            throw "Only numeric values can be entered";
+        }
     }
 
     function leakyMethod() {
+        // Can also just call 'foo = function () {};' if use strict is not supported/enabled
         window.foo = function() {};
     }
     

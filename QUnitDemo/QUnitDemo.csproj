@@ -133,6 +133,7 @@
     <Content Include="QUnitTests\qunit.assertions.test.js" />
     <Content Include="QUnitTests\qunit.exceptions.test.js" />
     <Content Include="QUnitTests\qunit.namespace.pollution.test.js" />
+    <Content Include="QUnitTests\qunit.run.reordering.js" />
     <Content Include="QUnitTests\qunit.setup.teardown.test.js" />
     <Content Include="QUnitTests\stubbed.functions.test.js" />
     <Content Include="README.jQuery.vsdoc.txt" />

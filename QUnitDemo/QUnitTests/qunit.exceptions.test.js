@@ -16,10 +16,11 @@
             scorecard.enter(input);
         }, /Only numeric values can be entered/);
     });
-    
+
     /* ignore
+    // This test works using the window.onerror which QUnit wires up
     test("Global syntax errors should be caught", function () {
-        {
+    {
     });
     */
 } ());

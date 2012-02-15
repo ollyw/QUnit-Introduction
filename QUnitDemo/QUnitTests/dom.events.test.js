@@ -22,7 +22,7 @@
     test("When the submit button is pressed, the form is hidden ", function () {
     function TestView() {
     $("#widgetButton").on("click", function (event) {
-    // What's missing here!
+    // What's missing here?s!
     $("#widgetForm").hide();
     });
     return this;
